@@ -5,7 +5,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Dashboard from './Dashboard';
 import Billboard from './experiments/Billboard';
-import RippleWrapper from './experiments/WaterRipples';
+import GlassRefraction from './experiments/GlassRefraction'
+import WaterRipples from './experiments/WaterRipples';
 
 // arc carousel
 // pink floyd prism
@@ -32,8 +33,12 @@ const router = createBrowserRouter([
     element: <Billboard />
   },
   {
+    path: "/refraction",
+    element: <GlassRefraction />
+  },
+  {
     path: "/ripples",
-    element: <RippleWrapper />
+    element: <WaterRipples />
   }
 ])
 

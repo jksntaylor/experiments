@@ -158,7 +158,7 @@ const Ripples: React.FC<{}> = () => {
   </group>
 }
 
-const RippleWrapper: React.FC<{}> = () => {
+const WaterRipples: React.FC<{}> = () => {
   return <Wrapper data-scroll-section>
     <Suspense fallback={<></>}>
       <Canvas orthographic dpr={Math.min(window.devicePixelRatio, 2)}>
@@ -175,4 +175,4 @@ const Wrapper = styled.section`
   overflow: hidden;
 `
 
-export default RippleWrapper
+export default WaterRipples
