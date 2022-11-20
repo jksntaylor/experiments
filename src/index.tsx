@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import Billboard from './experiments/Billboard';
 import GlassRefraction from './experiments/GlassRefraction'
 import WaterRipples from './experiments/WaterRipples';
+import RacetrackScene from './experiments/Racetrack';
 
 // arc carousel
 // pink floyd prism
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "/refraction",
     element: <GlassRefraction />
+  },
+  {
+    path: "/racetrack",
+    element: <RacetrackScene />
   },
   {
     path: "/ripples",

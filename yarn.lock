@@ -1793,6 +1793,11 @@
     "schema-utils" "^3.0.0"
     "source-map" "^0.7.3"
 
+"@pmndrs/cannon-worker-api@^2.3.0":
+  "integrity" "sha512-XFR/IABU6uIEllocfGBV9SVakQWIYrZq/Ijk2ZYTv2jYorDebvT4cW8GWIE6UO/T/NChpI+fBTGlUs6wwZW5sg=="
+  "resolved" "https://registry.npmjs.org/@pmndrs/cannon-worker-api/-/cannon-worker-api-2.3.0.tgz"
+  "version" "2.3.0"
+
 "@react-spring/animated@~9.5.5":
   "integrity" "sha512-glzViz7syQ3CE6BQOwAyr75cgh0qsihm5lkaf24I0DfU63cMm/3+br299UEYkuaHNmfDfM414uktiPlZCNJbQA=="
   "resolved" "https://registry.npmjs.org/@react-spring/animated/-/animated-9.5.5.tgz"
@@ -1839,6 +1844,15 @@
   "resolved" "https://registry.npmjs.org/@react-spring/types/-/types-9.5.5.tgz"
   "version" "9.5.5"
 
+"@react-three/cannon@^6.5.0":
+  "integrity" "sha512-C3ZC0bJwQAXQtvaNMURoVLISsbHfvASLhFmZSzseAfA6vEiza8RvcVsmByTPrKxF9udDpRmN9tQgtX6DA3deYg=="
+  "resolved" "https://registry.npmjs.org/@react-three/cannon/-/cannon-6.5.0.tgz"
+  "version" "6.5.0"
+  dependencies:
+    "@pmndrs/cannon-worker-api" "^2.3.0"
+    "cannon-es" "^0.20.0"
+    "cannon-es-debugger" "^1.0.0"
+
 "@react-three/drei@^9.40.4":
   "integrity" "sha512-8A8ShoBjLCJUnrDBFQYPAN7Nk0vCWxlrMXnN66Ju5URQCSrMYFoC3scCRCmuJZ2sf0qkdkEDphh+lw3nam7LOQ=="
   "resolved" "https://registry.npmjs.org/@react-three/drei/-/drei-9.40.4.tgz"
@@ -1863,7 +1877,7 @@
     "utility-types" "^3.10.0"
     "zustand" "^3.5.13"
 
-"@react-three/fiber@^8.9.1", "@react-three/fiber@>=6.0", "@react-three/fiber@>=7.0", "@react-three/fiber@>=8.0":
+"@react-three/fiber@^8.9.1", "@react-three/fiber@>=6.0", "@react-three/fiber@>=7.0", "@react-three/fiber@>=8", "@react-three/fiber@>=8.0":
   "integrity" "sha512-xRMO9RGp0DkxSFu5BmmkjCxJ4r0dEpLobtxXdZwI0h2rZZaCnkPM5zThRN8xaZNbZhzRSVICeNOFaZltr9xFyQ=="
   "resolved" "https://registry.npmjs.org/@react-three/fiber/-/fiber-8.9.1.tgz"
   "version" "8.9.1"
@@ -3475,6 +3489,16 @@
   "integrity" "sha512-zBUoFU0ZcxpvSt9IU66dXVT/3ctO1cy4y9cscs1szkPlcWb6pasYM144GqrUygUbT+k7cmUCW61cvskjcv0enQ=="
   "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001431.tgz"
   "version" "1.0.30001431"
+
+"cannon-es-debugger@^1.0.0":
+  "integrity" "sha512-sE9lDOBAYFKlh+0w+cvWKwUhJef8HYnUSVPWPL0jD15MAuVRQKno4QYZSGxgOoJkMR3mQqxL4bxys2b3RSWH8g=="
+  "resolved" "https://registry.npmjs.org/cannon-es-debugger/-/cannon-es-debugger-1.0.0.tgz"
+  "version" "1.0.0"
+
+"cannon-es@^0.20.0", "cannon-es@0.x":
+  "integrity" "sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA=="
+  "resolved" "https://registry.npmjs.org/cannon-es/-/cannon-es-0.20.0.tgz"
+  "version" "0.20.0"
 
 "case-sensitive-paths-webpack-plugin@^2.4.0":
   "integrity" "sha512-roIFONhcxog0JSSWbvVAh3OocukmSgpqOH6YpMkCvav/ySIV3JKg4Dc8vYtQjYi/UxpNE36r/9v+VqTQqgkYmw=="
@@ -8523,7 +8547,7 @@
   dependencies:
     "debounce" "^1.2.1"
 
-"react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0", "react@>=16.13", "react@>=16.8", "react@>=17.0", "react@>=18.0":
+"react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0", "react@>=16.13", "react@>=16.8", "react@>=17.0", "react@>=18", "react@>=18.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -9645,7 +9669,7 @@
     "potpack" "^1.0.1"
     "zstddec" "^0.0.2"
 
-"three@^0.146.0", "three@>= 0.123.0", "three@>= 0.125.0 < 0.147.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.136.0", "three@>=0.137", "three@>=0.141.0":
+"three@^0.146.0", "three@>= 0.123.0", "three@>= 0.125.0 < 0.147.0", "three@>=0.103.0", "three@>=0.122.0", "three@>=0.126", "three@>=0.133", "three@>=0.136.0", "three@>=0.137", "three@>=0.139", "three@>=0.141.0", "three@0.x":
   "integrity" "sha512-1lvNfLezN6OJ9NaFAhfX4sm5e9YCzHtaRgZ1+B4C+Hv6TibRMsuBAM5/wVKzxjpYIlMymvgsHEFrrigEfXnb2A=="
   "resolved" "https://registry.npmjs.org/three/-/three-0.146.0.tgz"
   "version" "0.146.0"
@@ -9829,7 +9853,7 @@
   dependencies:
     "is-typedarray" "^1.0.0"
 
-"typescript@^3.2.1 || ^4", "typescript@^4.4.2", "typescript@>= 2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+"typescript@^3.2.1 || ^4", "typescript@^4.4.2", "typescript@>= 2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", "typescript@>=3.8":
   "integrity" "sha512-CIfGzTelbKNEnLpLdGFgdyKhG23CKdKgQPOBc+OUNrkJ2vr+KSzsSV5kq5iWhEQbok+quxgGzrAtGWCyU7tHnA=="
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.9.3.tgz"
   "version" "4.9.3"
