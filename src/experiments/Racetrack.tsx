@@ -2,14 +2,14 @@
 
 import { Physics, Triplet, useBox, useCompoundBody, usePlane, useRaycastVehicle, useTrimesh } from '@react-three/cannon'
 import { Environment, MeshReflectorMaterial, OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { Canvas, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { BufferAttribute, Mesh, TextureLoader } from 'three'
+import { BufferAttribute, Mesh, Quaternion, TextureLoader, Vector3 } from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 const ColliderBox = ({ position, scale }) => {
-  let debug = true
+  let debug = false
   useBox(() => ({
     args: scale,
     position,
@@ -33,7 +33,7 @@ const Ramp: React.FC<{}> = () => {
   const vertices = geometry.attributes.position.array
   const indices = geometry.index.array
 
-  const [ref] = useTrimesh(
+  const [_ref] = useTrimesh(
     () => ({
       args: [vertices, indices],
       mass: 0,
@@ -101,7 +101,7 @@ const Track: React.FC<{}> = () => {
 }
 
 const Ground: React.FC<{}> = () => {
-  const [ref] = usePlane(
+  const [_ref] = usePlane(
     () => ({
       type: "Static",
       rotation: [-Math.PI * 0.5, 0, 0]
@@ -136,7 +136,7 @@ const Ground: React.FC<{}> = () => {
 
     let uvs2 = meshRef2.current.geometry.attributes.uv.array
     meshRef2.current.geometry.setAttribute('uv2', new BufferAttribute(uvs2, 2))
-  }, [meshRef.current, meshRef2.current])
+  }, [])
 
   return <>
     <mesh
@@ -248,7 +248,8 @@ const useWheels = (width: number, height: number, front: number, radius: number)
 }
 
 const WheelDebug = ({ radius, wheelRef }) => {
-  return <group ref={wheelRef}>
+  let debug = false
+  return debug && <group ref={wheelRef}>
     <mesh rotation={[0, 0, -Math.PI * 0.5]}>
       <cylinderGeometry args={[radius, radius, 0.015, 16]} />
       <meshBasicMaterial transparent opacity={0.25} />
@@ -261,7 +262,12 @@ const useControls = (vehicleApi, chassisApi) => {
     w: false,
     a: false,
     s: false,
-    d: false
+    d: false,
+    r: false,
+    arrowup: false,
+    arrowdown: false,
+    arrowright: false,
+    arrowleft: false
   })
 
   useEffect(() => {
@@ -315,12 +321,25 @@ const useControls = (vehicleApi, chassisApi) => {
         vehicleApi.setSteeringValue(0, i)
       }
     }
+
+    if (controls.arrowdown)  chassisApi.applyLocalImpulse([0, -5, 0], [0, 0, +1])
+    if (controls.arrowup)    chassisApi.applyLocalImpulse([0, -5, 0], [0, 0, -1])
+    if (controls.arrowleft)  chassisApi.applyLocalImpulse([0, -5, 0], [-0.5, 0, 0])
+    if (controls.arrowright) chassisApi.applyLocalImpulse([0, -5, 0], [+0.5, 0, 0])
+
+    if (controls.r) {
+      chassisApi.position.set(-1.5, 0.5, 3)
+      chassisApi.velocity.set(0, 0, 0)
+      chassisApi.angularVelocity.set(0, 0, 0)
+      chassisApi.rotation.set(0, 0, 0)
+    }
+
   }, [controls, vehicleApi, chassisApi])
 
   return controls
 }
 
-const Car: React.FC<{}> = () => {
+const Car: React.FC<{ thirdPerson: boolean }> = ({ thirdPerson }) => {
   let car = useLoader(
     GLTFLoader,
     process.env.PUBLIC_URL + "/racetrack/models/car.glb"
@@ -355,17 +374,42 @@ const Car: React.FC<{}> = () => {
 
   useControls(vehicleApi, chassisApi)
 
+  useFrame(state => {
+    if (!thirdPerson) return
+
+    let position = new Vector3(0, 0, 0)
+    position.setFromMatrixPosition(chassisBody.current.matrixWorld)
+
+    let quaternion = new Quaternion(0, 0, 0, 0)
+    quaternion.setFromRotationMatrix(chassisBody.current.matrixWorld)
+
+    let wDir = new Vector3(0, 0, -1)
+    wDir.applyQuaternion(quaternion)
+    wDir.normalize()
+
+    let cameraPosition = position.clone().add(
+      wDir.clone().multiplyScalar(-1).add(
+        new Vector3(0, 0.3, 0)
+      )
+    )
+
+    state.camera.position.copy(cameraPosition)
+    state.camera.lookAt(position)
+  })
+
   useEffect(() => {
     car.scale.set(0.0012, 0.0012, 0.0012)
     car.children[0].position.set(-365, -18, -67)
   }, [car])
 
-  // return <primitive object={car} rotation-y={Math.PI}/>
   return <group ref={vehicle} name="vehicle">
-    <mesh ref={chassisBody}>
+    {/* <mesh ref={chassisBody}>
       <meshBasicMaterial transparent={true} opacity={0.3}/>
       <boxGeometry args={chassisBodyArgs} />
-    </mesh>
+    </mesh> */}
+    <group ref={chassisBody} name="chassisBody">
+      <primitive object={car} rotation-y={Math.PI} position={[0, -0.09, 0]} />
+    </group>
 
     <WheelDebug wheelRef={wheels[0]} radius={wheelRadius} />
     <WheelDebug wheelRef={wheels[1]} radius={wheelRadius} />
@@ -375,16 +419,33 @@ const Car: React.FC<{}> = () => {
 }
 
 const Scene: React.FC<{}> = () => {
+
+  const [thirdPerson, setThirdPerson] = useState(false)
+  const [cameraPosition, setCameraPosition] = useState([-6, 3.9, 6.21])
+
+  useEffect(() => {
+    const keyHandler = (e) => {
+      if (e.key === 'k') {
+        if (thirdPerson) setCameraPosition([-6, 3.9, 6.21 + Math.random() * 0.01])
+        setThirdPerson(!thirdPerson)
+      }
+    }
+
+    window.addEventListener('keydown', keyHandler)
+    return () => window.removeEventListener('keydown', keyHandler)
+  }, [thirdPerson])
+
   return <Suspense fallback={null}>
     <Environment
       files={process.env.PUBLIC_URL + "/racetrack/textures/envmap.hdr"}
       background={true}
     />
-    <PerspectiveCamera makeDefault position={[-6, 3.9, 6.21]} fov={40} />
-    <OrbitControls target={[-2.64, -0.71, 0.03]}/>
+
+    <PerspectiveCamera makeDefault position={cameraPosition} fov={40} />
+    {!thirdPerson && <OrbitControls target={[-2.64, -0.71, 0.03]}/>}
     <Track />
     <Ground />
-    <Car />
+    <Car thirdPerson={thirdPerson}/>
   </Suspense>
 }
 
