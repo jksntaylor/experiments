@@ -8,8 +8,10 @@ import Billboard from './experiments/Billboard';
 import GlassRefraction from './experiments/GlassRefraction'
 import WaterRipples from './experiments/WaterRipples';
 import RacetrackScene from './experiments/Racetrack';
+import CarShow from './experiments/CarShow';
 
 // arc carousel
+// car show
 // pink floyd prism
 // fantasy portal
 // iss in orbit
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/billboard",
     element: <Billboard />
+  },
+  {
+    path: "/car-show",
+    element: <CarShow />
   },
   {
     path: "/refraction",

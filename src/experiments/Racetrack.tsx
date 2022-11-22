@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { Physics, Triplet, useBox, useCompoundBody, usePlane, useRaycastVehicle, useTrimesh } from '@react-three/cannon'
 import { Environment, MeshReflectorMaterial, OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
@@ -403,10 +402,6 @@ const Car: React.FC<{ thirdPerson: boolean }> = ({ thirdPerson }) => {
   }, [car])
 
   return <group ref={vehicle} name="vehicle">
-    {/* <mesh ref={chassisBody}>
-      <meshBasicMaterial transparent={true} opacity={0.3}/>
-      <boxGeometry args={chassisBodyArgs} />
-    </mesh> */}
     <group ref={chassisBody} name="chassisBody">
       <primitive object={car} rotation-y={Math.PI} position={[0, -0.09, 0]} />
     </group>
